@@ -36,7 +36,7 @@ public class MD5 implements Runnable {
     public void run() {
 
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
+            MessageDigest md = MessageDigest.getInstance(algorithm);
             md.update(Files.readAllBytes(file.toPath()));
             byte[] digest = md.digest();
             String fileChecksum = bytesToHex(digest).toUpperCase();
