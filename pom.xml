@@ -13,9 +13,21 @@
         <maven.compiler.target>11</maven.compiler.target>
         <java.version>11</java.version>
         <graalvm.version>20.1.0</graalvm.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli-codegen</artifactId>
+            <version>4.3.2</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.graalvm.sdk</groupId>
             <artifactId>graal-sdk</artifactId>
@@ -26,17 +38,28 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.3.0</version>
                 <configuration>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>org.frank.utils.MD5</mainClass>
                         </manifest>
                     </archive>
+<!--                    <annotationProcessorPaths>-->
+<!--                        <path>-->
+<!--                            <groupId>info.picocli</groupId>-->
+<!--                            <artifactId>picocli-codegen</artifactId>-->
+<!--                            <version>4.3.2</version>-->
+<!--                        </path>-->
+<!--                    </annotationProcessorPaths>-->
+<!--                    <compilerArgs>-->
+<!--                        <arg>-Aproject=${project.groupId}/${project.artifactId}</arg>-->
+<!--                    </compilerArgs>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -62,7 +85,7 @@
                 </executions>
                 <configuration>
                     <skip>false</skip>
-                    <imageName>HelloWorld</imageName>
+                    <imageName>MD5</imageName>
                     <buildArgs>
                         --no-fallback
                         --static
