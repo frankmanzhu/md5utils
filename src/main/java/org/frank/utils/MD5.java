@@ -8,6 +8,7 @@ import picocli.CommandLine.Parameters;
 import java.io.File;
 import java.nio.file.Files;
 import java.security.MessageDigest;
+import picocli.jansi.graalvm.AnsiConsole;
 
 @Command(name = "MD5", mixinStandardHelpOptions = true,
         showAtFileInUsageHelp = true,
@@ -67,8 +68,9 @@ public class MD5 implements Runnable {
 //                .build();
 //                .setColorScheme(colorScheme)
 
-        int exitCode = new CommandLine(new MD5())
-                .execute(args);
-        System.exit(exitCode);
+        try (AnsiConsole ignored = AnsiConsole.windowsInstall()) {
+            int exitCode = new CommandLine(new MD5()).execute(args);
+            System.exit(exitCode);
+        }
     }
 }
