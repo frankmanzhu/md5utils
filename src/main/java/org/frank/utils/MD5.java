@@ -28,8 +28,8 @@ public class MD5 implements Runnable {
             description = "Verbose mode. Helpful for troubleshooting.")
     private boolean verbose;
 
-    @Parameters(index = "0", description = "The file whose checksum to calculate.")
-    private File file;
+    @Parameters(description = "The files whose checksum to calculate.")
+    private File[] files;
 
     @Option(names = {"-a", "--algorithm"}, description = "MD5, SHA-1, SHA-256, ...")
     private String algorithm = "MD5";
@@ -38,10 +38,19 @@ public class MD5 implements Runnable {
 
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm);
-            md.update(Files.readAllBytes(file.toPath()));
-            byte[] digest = md.digest();
-            String fileChecksum = bytesToHex(digest).toUpperCase();
-            System.out.println(fileChecksum);
+
+            if (files == null) {
+                System.out.println("Add MD5 itself to the checksum");
+                files = new File[1];
+                files[0] = new File("./MD5");
+            }
+
+            for (File file : files) {
+                md.update(Files.readAllBytes(file.toPath()));
+                byte[] digest = md.digest();
+                String fileChecksum = bytesToHex(digest).toUpperCase();
+                System.out.println("File name is : " + file.getName() + " and its md5 is: " + fileChecksum);
+            }
         } catch (Exception e) {
             if (verbose) {
                 e.printStackTrace();
